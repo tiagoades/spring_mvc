@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{LayoutPadrao}">
+
+<head>
+<title>Cadastro de Titulo</title>
+</head>
+
+<section layout:fragment="conteudo">
+
+	<form class="needs-validation" novalidate method="POST"
+		th:action="@{/titulos}" th:object="${titulo}">
+
+		<div layout:insert="MensagemErro"></div>
+		<div layout:insert="MensagemGeral"></div>
+
+		<div class="card">
+			<div class="card-header">
+
+				<h5 class="card-title">
+					Cadastrar Novo Titulo <a class="btn btn-link aw-link-panel"
+						th:href="@{/titulos}">Pesquisar Titulo</a>
+				</h5>
+			</div>
+
+			<div class="card-body">
+
+				<input type="hidden" th:field="*{codigo}">
+
+				<div class="form-group row">
+					<label for="descricao" class="col-sm-2 col-form-label">Descrição</label>
+					<div class="col-sm-2">
+						<input type="text" class="form-control" id="descricao"
+							name="descricao" th:field="*{descricao}" required />
+						<div class="invalid-feedback">Por favor insira a descrição</div>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="dataVencimento" class="col-sm-2 col-form-label">Data
+						Vencimento</label>
+					<div class="col-sm-2">
+						<input type="text" class="form-control" id="dataVencimento"
+							name="dataVencimento" th:field="*{dataVencimento}" required
+							data-provide="datepicker" data-date-format="dd/mm/yyyy"
+							data-date-language="pt-BR" data-date-autoclose="true"
+							data-date-today-highlight="true" data-date-orientation="bottom" />
+						<div class="invalid-feedback">Por favor insira a data de
+							vencimento</div>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="valor" class="col-sm-2 col-form-label">Valor</label>
+					<div class="col-sm-2">
+						<input type="text" class="form-control js-currency" id="valor"
+							name="valor" th:field="*{valor}" required>
+						<div class="invalid-feedback">Por favor insira o valor</div>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="status" class="col-sm-2 col-form-label">Status</label>
+					<div class="col-sm-2">
+
+						<select class="custom-select" name="status">
+							<option th:each="status : ${todosStatusTitulo}"
+								th:value="${status}" th:text="${status.descricao}"
+								th:field="*{status}" />
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-sm-offset-2 .col-sm-2">
+						<button type="submit" class="btn btn-primary">Salvar</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</form>
+	<script>
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict';
+			window.addEventListener('load',
+					function() {
+						// Fetch all the forms we want to apply custom Bootstrap validation styles to
+						var forms = document
+								.getElementsByClassName('needs-validation');
+						// Loop over them and prevent submission
+						var validation = Array.prototype.filter.call(forms,
+								function(form) {
+									form.addEventListener('submit', function(
+											event) {
+										if (form.checkValidity() === false) {
+											event.preventDefault();
+											event.stopPropagation();
+										}
+										form.classList.add('was-validated');
+									}, false);
+								});
+					}, false);
+		})();
+	</script>
+</section>
+
+</html>
